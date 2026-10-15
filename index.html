@@ -10,6 +10,77 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+/* ===== MEDIA HUBS, PANELS, LIGHTBOX & SOCIAL ICONS (added) ===== */
+.hubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
+.hub{position:relative;aspect-ratio:16/10;border:0;padding:0;cursor:pointer;overflow:hidden;border-radius:4px;color:#fff;text-align:left;font:inherit;background:linear-gradient(135deg,var(--blue),var(--ink));box-shadow:0 18px 40px rgba(15,27,45,.18);transition:transform .3s,box-shadow .3s}
+.hub img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.hub::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,27,45,.1),rgba(15,27,45,.82))}
+.hub:hover{transform:translateY(-5px);box-shadow:0 24px 50px rgba(15,27,45,.28)}
+.hub:hover img{transform:scale(1.06)}
+.hub-in{position:absolute;z-index:1;left:28px;right:28px;bottom:26px;display:flex;flex-direction:column;gap:4px}
+.hub-in strong{font:600 2rem var(--serif)}
+.hub-in small{color:#e6c981;font-size:.95rem}
+.hub-ico{position:absolute;z-index:1;top:22px;right:22px;width:54px;height:54px;border-radius:50%;background:var(--garnet);display:grid;place-items:center}
+.hub-ico svg{width:24px;height:24px;fill:#fff}
+
+.panel{width:min(1120px,94vw);max-height:90vh;border:0;border-radius:6px;padding:0;background:var(--paper);color:var(--ink);overflow:hidden}
+.panel::backdrop{background:rgba(10,18,32,.8);backdrop-filter:blur(3px)}
+.panel[open]{animation:pop .3s ease}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}}
+body:has(dialog[open]){overflow:hidden}
+.p-in{display:flex;flex-direction:column;max-height:90vh}
+.p-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 26px;background:var(--ink);color:#fff}
+.p-head h3{font-size:1.5rem;font-weight:500}
+.p-tools{display:flex;gap:12px;align-items:center}
+.pbtn{background:var(--garnet);color:#fff;border:0;padding:10px 20px;font:600 .9rem var(--sans);cursor:pointer;border-radius:2px}
+.pbtn:disabled{opacity:.4;cursor:not-allowed}
+.pclose{background:none;border:1.5px solid #fff;color:#fff;width:38px;height:38px;border-radius:50%;font-size:1.3rem;line-height:1;cursor:pointer}
+.pclose:hover{background:#fff;color:var(--ink)}
+.p-hint{padding:12px 26px;font-size:.9rem;color:var(--muted);background:var(--white);border-bottom:1px solid var(--line)}
+.p-grid{overflow:auto;padding:26px;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
+.item{position:relative;background:var(--white);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:0}
+.item h4{font:600 1.1rem var(--serif);color:var(--blue);padding:14px 16px 0}
+.item p,.item figcaption{padding:4px 16px 16px;font-size:.9rem;color:var(--muted)}
+.stage{position:relative;aspect-ratio:16/9;background:var(--blue);display:grid;place-items:center;color:#aab6c8;font-size:.85rem;text-align:center;padding:14px}
+.stage img,.stage iframe,.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;background:#000}
+.play{position:absolute;z-index:1;width:62px;height:62px;border-radius:50%;border:0;background:var(--garnet);cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:transform .2s}
+.play::before{content:"";position:absolute;left:25px;top:19px;border-left:19px solid #fff;border-block:12px solid transparent}
+.play:hover{transform:scale(1.1)}
+.stage.on .play{display:none}
+.sel{position:absolute;z-index:3;top:10px;left:10px;cursor:pointer}
+.sel input{position:absolute;opacity:0}
+.sel span{display:block;width:26px;height:26px;border-radius:4px;background:rgba(255,255,255,.92);border:2px solid var(--blue);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.sel input:checked+span{background:var(--garnet);border-color:var(--garnet)}
+.sel input:checked+span::after{content:"";display:block;width:6px;height:12px;margin:3px 0 0 8px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg)}
+.sel input:focus-visible+span{outline:3px solid var(--gold)}
+.ph img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;cursor:zoom-in;transition:transform .4s}
+.ph{overflow:hidden}
+.ph:hover img{transform:scale(1.04)}
+.ph.missing img{display:none}
+.ph.missing::before{content:"Photo coming soon";display:grid;place-items:center;aspect-ratio:4/3;background:#e8ecf2;color:var(--muted);font-size:.9rem}
+.ph.missing .sel{display:none}
+
+.lb{position:absolute;inset:0;z-index:20;background:rgba(10,18,32,.96);display:grid;place-items:center;padding:56px 70px}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:2px}
+.lb button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;width:46px;height:46px;border-radius:50%;font-size:1.5rem;cursor:pointer}
+.lb button:hover{background:var(--garnet)}
+.lb .prev{left:14px}.lb .next{right:14px}.lb .x{top:14px;right:14px}
+.lb .prev,.lb .next{top:50%;transform:translateY(-50%)}
+.lb span{position:absolute;bottom:16px;color:#cfd7e4;font-size:.9rem}
+@media(max-width:600px){.lb{padding:56px 12px}.p-head,.p-grid{padding-inline:16px}}
+
+.social{display:flex;justify-content:center;gap:18px}
+.social a{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--ink);transition:transform .25s,background .25s}
+.social svg{width:26px;height:26px;fill:#fff}
+.social a:hover{transform:translateY(-4px)}
+.social .li:hover{background:#0a66c2}.social .fb:hover{background:#1877f2}.social .x:hover{background:#000}
+.foot-mail{margin-top:8px}
+.foot-mail a{color:#e6c981;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.foot-mail a:hover{color:#fff;border-bottom-color:#fff}
+@media(prefers-reduced-motion:reduce){.hub,.hub img,.play,.social a,.ph img,.panel[open]{transition:none;animation:none}}
+</style>
 </head>
 <body>
 
@@ -123,52 +194,125 @@
 </div></section>
 
 <section id="media"><div class="wrap">
-  <h2>Videos and gallery</h2>
-
-  <!-- ================= VIDEOS =================
-   OPTION A (YouTube): delete the placeholder text inside a ".media" box and paste:
-     <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Video title" allowfullscreen loading="lazy"></iframe>
-   OPTION B (file you upload to the "videos" folder):
-     <video controls preload="metadata" poster="images/video1-cover.jpg"><source src="videos/video1.mp4" type="video/mp4"></video>
-  ============================================ -->
-  <div class="grid">
-    <figure>
-      <div class="media">
-        <!-- PASTE VIDEO 1 CODE HERE -->
-        Video 1: add your embed code here
-      </div>
-      <figcaption class="cap">Video title and short description</figcaption>
-    </figure>
-    <figure>
-      <div class="media">
-        <!-- PASTE VIDEO 2 CODE HERE -->
-        Video 2: add your embed code here
-      </div>
-      <figcaption class="cap">Video title and short description</figcaption>
-    </figure>
-  </div>
-
-  <!-- ================= PHOTOS =================
-   Save photos in the "images" folder as gallery-1.jpg, gallery-2.jpg, ...
-   They appear automatically. To add more, copy a whole <figure> block.
-  ============================================ -->
-  <div class="grid" style="margin-top:44px">
-    <figure><div class="media sq">Photo 1<img src="images/gallery-1.jpg" alt="Describe photo 1" loading="lazy" onerror="this.remove()"></div><figcaption class="cap">Caption for photo 1</figcaption></figure>
-    <figure><div class="media sq">Photo 2<img src="images/gallery-2.jpg" alt="Describe photo 2" loading="lazy" onerror="this.remove()"></div><figcaption class="cap">Caption for photo 2</figcaption></figure>
-    <figure><div class="media sq">Photo 3<img src="images/gallery-3.jpg" alt="Describe photo 3" loading="lazy" onerror="this.remove()"></div><figcaption class="cap">Caption for photo 3</figcaption></figure>
+  <h2>Media Gallery</h2>
+  <!-- Optional cover pictures for the two big tiles: images/videos-cover.jpg and images/photos-cover.jpg -->
+  <div class="hubs">
+    <button class="hub" type="button" data-open="videoPanel" aria-haspopup="dialog">
+      <img src="images/videos-cover.jpg" alt="" onerror="this.remove()">
+      <span class="hub-ico"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      <span class="hub-in"><strong>Videos</strong><small>Choose one or more to play</small></span>
+    </button>
+    <button class="hub" type="button" data-open="photoPanel" aria-haspopup="dialog">
+      <img src="images/photos-cover.jpg" alt="" onerror="this.remove()">
+      <span class="hub-ico"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5z"/></svg></span>
+      <span class="hub-in"><strong>Photos</strong><small>Browse and view the gallery</small></span>
+    </button>
   </div>
 </div></section>
+
+<!-- ================= VIDEO PANEL =================
+ TO ADD A VIDEO: copy one whole <article class="item"> block.
+   YouTube video : put the ID in data-yt  (the part after v= in the link), e.g. data-yt="dQw4w9WgXcQ"
+   Uploaded file : put the path in data-src, e.g. data-src="videos/video1.mp4"
+   Cover picture : images/video1-cover.jpg (name it as in the <img> line)
+================================================= -->
+<dialog class="panel" id="videoPanel" aria-label="Videos"><div class="p-in">
+  <div class="p-head"><h3>Videos</h3><div class="p-tools">
+    <button class="pbtn" type="button" data-sel disabled>Play selected (<span data-n>0</span>)</button>
+    <button class="pclose" type="button" data-close aria-label="Close">&times;</button></div></div>
+  <div class="p-hint">Press the play button on a video, or tick several and press "Play selected".</div>
+  <div class="p-grid">
+    <article class="item" data-yt="" data-src="">
+      <label class="sel"><input type="checkbox" aria-label="Select video 1"><span></span></label>
+      <div class="stage"><img src="images/video1-cover.jpg" alt="" onerror="this.remove()"><button class="play" type="button" aria-label="Play video 1"></button><span>Video 1</span></div>
+      <h4>Video title 1</h4><p>Short description of the video.</p>
+    </article>
+    <article class="item" data-yt="" data-src="">
+      <label class="sel"><input type="checkbox" aria-label="Select video 2"><span></span></label>
+      <div class="stage"><img src="images/video2-cover.jpg" alt="" onerror="this.remove()"><button class="play" type="button" aria-label="Play video 2"></button><span>Video 2</span></div>
+      <h4>Video title 2</h4><p>Short description of the video.</p>
+    </article>
+  </div>
+</div></dialog>
+
+<!-- ================= PHOTO PANEL =================
+ Save photos in the "images" folder as gallery-1.jpg, gallery-2.jpg ... They appear automatically.
+ TO ADD MORE: copy one whole <figure class="item ph"> line and change the file name and caption.
+================================================= -->
+<dialog class="panel" id="photoPanel" aria-label="Photos"><div class="p-in">
+  <div class="p-head"><h3>Photos</h3><div class="p-tools">
+    <button class="pbtn" type="button" data-sel disabled>View selected (<span data-n>0</span>)</button>
+    <button class="pclose" type="button" data-close aria-label="Close">&times;</button></div></div>
+  <div class="p-hint">Click any photo to enlarge it, or tick several and press "View selected".</div>
+  <div class="p-grid">
+    <figure class="item ph"><label class="sel"><input type="checkbox" aria-label="Select photo 1"><span></span></label><img src="images/gallery-1.jpg" alt="Photo 1" loading="lazy" onerror="this.closest('.item').classList.add('missing')"><figcaption>Caption for photo 1</figcaption></figure>
+    <figure class="item ph"><label class="sel"><input type="checkbox" aria-label="Select photo 2"><span></span></label><img src="images/gallery-2.jpg" alt="Photo 2" loading="lazy" onerror="this.closest('.item').classList.add('missing')"><figcaption>Caption for photo 2</figcaption></figure>
+    <figure class="item ph"><label class="sel"><input type="checkbox" aria-label="Select photo 3"><span></span></label><img src="images/gallery-3.jpg" alt="Photo 3" loading="lazy" onerror="this.closest('.item').classList.add('missing')"><figcaption>Caption for photo 3</figcaption></figure>
+    <figure class="item ph"><label class="sel"><input type="checkbox" aria-label="Select photo 4"><span></span></label><img src="images/gallery-4.jpg" alt="Photo 4" loading="lazy" onerror="this.closest('.item').classList.add('missing')"><figcaption>Caption for photo 4</figcaption></figure>
+    <figure class="item ph"><label class="sel"><input type="checkbox" aria-label="Select photo 5"><span></span></label><img src="images/gallery-5.jpg" alt="Photo 5" loading="lazy" onerror="this.closest('.item').classList.add('missing')"><figcaption>Caption for photo 5</figcaption></figure>
+    <figure class="item ph"><label class="sel"><input type="checkbox" aria-label="Select photo 6"><span></span></label><img src="images/gallery-6.jpg" alt="Photo 6" loading="lazy" onerror="this.closest('.item').classList.add('missing')"><figcaption>Caption for photo 6</figcaption></figure>
+  </div>
+  <div class="lb" id="lb" hidden>
+    <button class="x" type="button" aria-label="Close photo">&times;</button>
+    <button class="prev" type="button" aria-label="Previous photo">&#8249;</button>
+    <img alt=""><button class="next" type="button" aria-label="Next photo">&#8250;</button>
+    <span id="lbc"></span>
+  </div>
+</div></dialog>
 
 <section id="contact" class="alt"><div class="wrap contact">
   <h2>Connect</h2>
   <p>For partnerships in agriculture, education and international development, or speaking and collaboration requests, reach out on LinkedIn.</p>
-  <a class="btn fill" href="https://linkedin.com/in/dr-lamin-en-drammeh-56818514" target="_blank" rel="noopener">View LinkedIn profile</a>
+  <div class="social">
+    <a class="li" href="https://linkedin.com/in/dr-lamin-en-drammeh-56818514" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+    <!-- FACEBOOK: replace the link below with his Facebook page/profile address -->
+    <a class="fb" href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
+    <!-- X (TWITTER): replace the link below with his X profile address -->
+    <a class="x" href="https://x.com/" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+  </div>
   <!-- EMAIL BUTTON: remove the comment marks and add the real address
   <a class="btn" href="mailto:name@example.com">Send an email</a>
   -->
 </div></section>
 
-<footer>&copy; <span id="y"></span> Dr. Lamin E. Drammeh. All rights reserved.</footer>
+<footer>&copy; <span id="y"></span> Dr. Lamin E. Drammeh. All rights reserved.
+  <!-- EMAIL: replace name@example.com with the real address (in BOTH places below) -->
+  <p class="foot-mail"><a href="mailto:name@example.com?subject=Website%20enquiry">Email: name@example.com</a></p>
+</footer>
+<script>
+(function(){
+var $=function(s,r){return(r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var lb=$('#lb'),lim=$('img',lb),L=[],k=0;
+function show(n){k=(n+L.length)%L.length;lim.src=L[k].src;lim.alt=L[k].alt;$('#lbc').textContent=(k+1)+' / '+L.length}
+function openLb(list,n){if(!list.length)return;L=list;lb.hidden=false;show(n)}
+function play(item){var st=$('.stage',item);if(st.classList.contains('on'))return;
+  st._o=st.innerHTML;var y=item.dataset.yt,s=item.dataset.src;
+  if(y)st.innerHTML='<iframe src="https://www.youtube.com/embed/'+y+'?autoplay=1&rel=0" title="Video" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+  else if(s)st.innerHTML='<video controls autoplay playsinline src="'+s+'"></video>';
+  else st.innerHTML='<span>Video coming soon</span>';
+  st.classList.add('on')}
+function count(p){var n=$$('input:checked',p).length;$('[data-n]',p).textContent=n;$('[data-sel]',p).disabled=!n}
+$$('[data-open]').forEach(function(b){b.onclick=function(){document.getElementById(b.dataset.open).showModal()}});
+$$('.panel').forEach(function(p){
+  $('[data-close]',p).onclick=function(){p.close()};
+  p.addEventListener('click',function(e){
+    if(e.target===p)return p.close();
+    var pl=e.target.closest('.play');if(pl)return play(pl.closest('.item'));
+    var im=e.target.closest('.ph img');if(im){var a=$$('.ph:not(.missing) img',p);openLb(a,a.indexOf(im))}});
+  p.addEventListener('change',function(){count(p)});
+  $('[data-sel]',p).onclick=function(){
+    var c=$$('.item',p).filter(function(i){return $('input',i).checked});
+    if($('.ph',p))openLb(c.map(function(i){return $('img',i)}),0);else c.forEach(play)};
+  p.addEventListener('cancel',function(e){if(!lb.hidden){e.preventDefault();lb.hidden=true}});
+  p.addEventListener('close',function(){lb.hidden=true;
+    $$('.stage.on',p).forEach(function(s){s.innerHTML=s._o;s.classList.remove('on')});
+    $$('input:checked',p).forEach(function(c){c.checked=false});count(p)})});
+$('.x',lb).onclick=function(){lb.hidden=true};
+$('.prev',lb).onclick=function(){show(k-1)};$('.next',lb).onclick=function(){show(k+1)};
+document.addEventListener('keydown',function(e){if(lb.hidden)return;
+  if(e.key==='ArrowLeft')show(k-1);if(e.key==='ArrowRight')show(k+1)});
+})();
+</script>
 <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>
 </html>
