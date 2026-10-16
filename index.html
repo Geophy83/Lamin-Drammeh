@@ -81,6 +81,42 @@ body:has(dialog[open]){overflow:hidden}
 .foot-mail a:hover{color:#fff;border-bottom-color:#fff}
 @media(prefers-reduced-motion:reduce){.hub,.hub img,.play,.social a,.ph img,.panel[open]{transition:none;animation:none}}
 </style>
+<style>
+/* ===== PROUDLY GAMBIAN + BOOK SECTIONS (added) ===== */
+:root{--gm-red:#ce1126;--gm-blue:#0c1c8c;--gm-green:#3a7728}
+.flagbar{display:block;height:10px;border-radius:2px;background:linear-gradient(90deg,var(--gm-red) 0 37.5%,#fff 37.5% 43.75%,var(--gm-blue) 43.75% 56.25%,#fff 56.25% 62.5%,var(--gm-green) 62.5% 100%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.eyebrow{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--garnet);margin-bottom:10px}
+.gm{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center}
+.gm-photo{margin:0}
+.gm-frame{position:relative;aspect-ratio:3/2;background:linear-gradient(135deg,var(--blue),var(--ink));display:grid;place-items:center;text-align:center;padding:24px;color:#aab6c8;font-size:.9rem;border-radius:4px 4px 0 0;overflow:hidden;box-shadow:0 18px 40px rgba(15,27,45,.18)}
+.gm-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gm-photo .flagbar{height:14px;border-radius:0 0 4px 4px}
+.gm-photo figcaption{font-size:.9rem;color:var(--muted);margin-top:12px}
+.gm-text h3{font-size:clamp(1.5rem,2.6vw,2rem);color:var(--blue);margin-bottom:16px}
+.gm-text p{color:var(--muted);max-width:52ch}
+.gm-text p+p{margin-top:14px}
+.gm-fact{display:flex;gap:14px;align-items:center;margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-weight:600;color:var(--ink)}
+.gm-fact .flagbar{width:46px;height:30px;flex:none;border-radius:3px;background:linear-gradient(180deg,var(--gm-red) 0 37.5%,#fff 37.5% 43.75%,var(--gm-blue) 43.75% 56.25%,#fff 56.25% 62.5%,var(--gm-green) 62.5% 100%)}
+.bk{display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:64px;align-items:center}
+.bk-cover{position:relative;aspect-ratio:2/3;border-radius:3px 8px 8px 3px;overflow:hidden;background:linear-gradient(160deg,var(--blue),var(--ink));box-shadow:0 26px 50px rgba(15,27,45,.35),-6px 0 0 rgba(0,0,0,.18);display:flex;flex-direction:column;justify-content:space-between;padding:34px 28px;color:#fff}
+.bk-cover::after{content:"";position:absolute;inset:0 auto 0 0;width:14px;background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(255,255,255,.12) 60%,transparent);z-index:2;pointer-events:none}
+.bk-cover small{letter-spacing:.14em;font-size:.72rem;color:#e6c981}
+.bk-cover b{font:600 2rem/1.15 var(--serif)}
+.bk-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.badge{display:inline-block;background:var(--garnet);color:#fff;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:2px}
+.bk-info h3{font-size:clamp(1.8rem,3.2vw,2.6rem);color:var(--blue);margin:16px 0 6px}
+.bk-info .sub{font:italic 1.2rem var(--serif);color:var(--garnet);margin-bottom:18px}
+.bk-info p{color:var(--muted);max-width:60ch}
+.bk-info dl{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin:26px 0;padding:20px 0;border-block:1px solid var(--line);font-size:.95rem}
+.bk-info dt{font-weight:600;color:var(--ink)}
+.bk-info dd{margin:0;color:var(--muted)}
+.bk-btns{display:flex;gap:14px;flex-wrap:wrap}
+.bk-btn{padding:13px 26px;border-radius:2px;text-decoration:none;font-weight:600;font-size:.95rem;border:1.5px solid var(--ink);color:var(--ink);transition:background .2s,color .2s}
+.bk-btn.fill{background:var(--garnet);border-color:var(--garnet);color:#fff}
+.bk-btn:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+@media(max-width:820px){.gm,.bk{grid-template-columns:1fr;gap:38px}.bk-cover{max-width:300px}}
+@media(prefers-reduced-motion:reduce){.bk-btn{transition:none}}
+</style>
 </head>
 <body>
 
@@ -91,6 +127,8 @@ body:has(dialog[open]){overflow:hidden}
     <li><a href="#impact">Impact</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#education">Education</a></li>
+    <li><a href="#gambia">Gambia</a></li>
+    <li><a href="#book">Book</a></li>
     <li><a href="#media">Media</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -189,6 +227,65 @@ body:has(dialog[open]){overflow:hidden}
         <li>SC State Hall of Fame (2012) and MEAC Hall of Fame (2021)<small>Track captain and NCAA All-American</small></li>
         <li>Olympian<small>Represented The Gambia, Atlanta 1996</small></li>
       </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- ================= PROUDLY GAMBIAN =================
+ PHOTO: save the team photo in the "images" folder as gambia-team.jpg (it appears automatically).
+ Edit the words below freely; keep the tags.
+=================================================== -->
+<section id="gambia"><div class="wrap">
+  <h2>Proudly Gambian</h2>
+  <div class="gm">
+    <figure class="gm-photo">
+      <div class="gm-frame"><span>Team photo: save as images/gambia-team.jpg</span>
+        <img src="images/gambia-team.jpg" alt="A team of Gambian nationals proudly holding the national flag of The Gambia" loading="lazy" onerror="this.remove()"></div>
+      <i class="flagbar"></i>
+      <figcaption>Gambian nationals proudly holding the national flag</figcaption>
+    </figure>
+    <div class="gm-text">
+      <p class="eyebrow">The Gambia</p>
+      <h3>Rooted in The Gambia, serving the world</h3>
+      <p>Wherever his work has taken him, Dr. Drammeh has carried his Gambian heritage with pride. The national flag stands for the unity, dignity and service that shape his journey.</p>
+      <p>From the athletics track to the university boardroom, he continues to represent The Gambia with distinction.</p>
+      <div class="gm-fact"><i class="flagbar"></i><span>Represented The Gambia at the 1996 Atlanta Olympic Games</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ================= BOOK =================
+ COVER: save the cover as images/book-cover.jpg (it replaces the placeholder automatically).
+ Change the title, subtitle, description and details below. Remove the "Coming soon" badge after launch.
+=========================================== -->
+<section id="book" class="alt"><div class="wrap">
+  <h2>The Book</h2>
+  <div class="bk">
+    <div class="bk-cover">
+      <small>DR. LAMIN E. DRAMMEH</small>
+      <b>Your Book Title</b>
+      <i class="flagbar"></i>
+      <img src="images/book-cover.jpg" alt="Cover of the book by Dr. Lamin E. Drammeh" loading="lazy" onerror="this.remove()">
+    </div>
+    <div class="bk-info">
+      <span class="badge">Coming soon</span>
+      <h3>Your Book Title Here</h3>
+      <p class="sub">A short subtitle that explains the book in one line</p>
+      <p>Write two or three sentences here about what the book is about, who it is for and what readers will take away from it.</p>
+      <dl>
+        <dt>Author</dt><dd>Dr. Lamin E. Drammeh</dd>
+        <dt>Publisher</dt><dd>To be announced</dd>
+        <dt>Release</dt><dd>Coming soon</dd>
+        <!-- ISBN: add a line like  <dt>ISBN</dt><dd>978-0-00-000000-0</dd> -->
+      </dl>
+      <div class="bk-btns">
+        <a class="bk-btn fill" href="#contact">Get notified at launch</a>
+        <!-- AFTER LAUNCH, remove the comment marks and paste the real shop link:
+        <a class="bk-btn" href="https://YOUR-SHOP-LINK" target="_blank" rel="noopener">Order the book</a>
+        SAMPLE CHAPTER (save the PDF as books/sample.pdf):
+        <a class="bk-btn" href="books/sample.pdf" target="_blank" rel="noopener">Read a sample</a>
+        -->
+      </div>
     </div>
   </div>
 </div></section>
