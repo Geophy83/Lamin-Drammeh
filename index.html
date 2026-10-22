@@ -330,6 +330,21 @@
       .nav-links.open{display:flex}.nav-links a{display:block;padding:12px 10px;font-size:13px}
       .nav-links .nav-cta{margin-top:7px;text-align:center}
     }
+
+    /* ===== Gallery: show every photo/video in its true proportions (no cropping, no zoom, never enlarged) ===== */
+    .mg-grid{align-items:start;grid-auto-rows:max-content}
+    .mg-ph img{width:auto;max-width:100%;height:auto;max-height:70vh;aspect-ratio:auto;object-fit:contain;margin:0 auto}
+    .mg-stage img,.mg-stage video{object-fit:contain}
+    .mg-item.mg-wide{grid-column:1/-1}
+    .mg-stage.on:has(video){aspect-ratio:auto;display:block;padding:0;background:#000}
+    .mg-stage.on video{position:static;display:block;width:auto;max-width:100%;height:auto;max-height:calc(90vh - 240px);margin:0 auto}
+    .mg-lb{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+    .mg-lb img{width:auto;height:auto;max-width:100%;max-height:100%;min-width:0;min-height:0;object-fit:contain;margin:auto}
+
+    /* ===== Gallery tiles: thumbnails keep their real proportions and size (no zoom, no cropping) ===== */
+    .mg-hub{aspect-ratio:auto;min-height:220px;display:flex;align-items:center;justify-content:center}
+    .mg-hub img{position:relative;inset:auto;width:auto;max-width:100%;height:auto;max-height:520px;object-fit:contain;margin:0 auto;display:block;transition:none}
+    .mg-hub:hover img{transform:none}
   </style>
 </head>
 <body>
@@ -606,7 +621,6 @@
           <article class="youth-card"><span class="mini">05 · Opportunity</span><h3>Internships and talent</h3><p>Share verified opportunities and showcase emerging talents, projects, and achievements with appropriate consent.</p></article>
           <article class="youth-card"><span class="mini">06 · Challenge</span><h3>Student competitions</h3><p>Plan essay competitions, group projects, research reports, and leadership bootcamps, including annual awards for the top three finishers.</p></article>
         </div>
-        <div class="phase-note"><strong>Suggested first phase:</strong> publish the mission, a small set of learning resources, and a simple participation pathway. Before launching forms or youth accounts, establish parental/guardian consent, safeguarding procedures, privacy rules, moderation, and clear eligibility criteria for activities and awards.</div>
       </div>
     </section>
 
@@ -652,7 +666,6 @@
           </button>
         </div>
         <div class="media-tabs" aria-label="Media gallery shortcuts"><a href="#media" data-open="mgPhotos">Photography</a><a href="#media" data-open="mgVideos">Videos and interviews</a><a href="#contact">Media enquiries</a></div>
-        <div class="media-note"><strong>Publishing note:</strong> Replace the gallery placeholders with approved photographs and video links. Confirm permissions, captions, dates, and the correct official X profile before the website goes live.</div>
       </div>
     </section>
 
@@ -790,6 +803,7 @@
         else if (s) st.innerHTML = '<video controls autoplay playsinline src="' + s + '"></video>';
         else st.innerHTML = '<em>Approved video coming soon</em>';
         st.classList.add('on');
+        item.classList.add('mg-wide');
       }
       function count(p) { var n = $$('input:checked', p).length; $('[data-n]', p).textContent = n; $('[data-sel]', p).disabled = !n; }
       $$('[data-open]').forEach(function (b) {
@@ -814,7 +828,7 @@
         p.addEventListener('cancel', function (e) { if (!lb.hidden) { e.preventDefault(); lb.hidden = true; } });
         p.addEventListener('close', function () {
           lb.hidden = true;
-          $$('.mg-stage.on', p).forEach(function (s) { s.innerHTML = s._o; s.classList.remove('on'); });
+          $$('.mg-stage.on', p).forEach(function (s) { s.innerHTML = s._o; s.classList.remove('on'); }); $$('.mg-wide', p).forEach(function (i) { i.classList.remove('mg-wide'); });
           $$('input:checked', p).forEach(function (c) { c.checked = false; });
           count(p);
         });
