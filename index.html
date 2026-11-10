@@ -759,7 +759,7 @@
       <article class="mg-item" data-yt="" data-src="videos/Food Security1.mp4"><label class="mg-sel"><input type="checkbox" aria-label="Select video: Media and interviews"><span></span></label><div class="mg-stage"><img src="images/Food Security1.png" alt="" onerror="this.remove()"><button class="mg-play" type="button" aria-label="Play: Media and interviews"></button><em>Interview and conversation</em></div><div class="mg-copy"><span class="label">Interview</span><h3>Media and interviews</h3><p>Interviews, podcasts, and public conversations.</p></div></article>
       <article class="mg-item" data-yt="" data-src="videos/My Vision.mp4"><label class="mg-sel"><input type="checkbox" aria-label="Select video: Inspiring the next generation"><span></span></label><div class="mg-stage"><img src="images/My Vision.png" alt="" onerror="this.remove()"><button class="mg-play" type="button" aria-label="Play: Inspiring the next generation"></button><em>Youth and leadership</em></div><div class="mg-copy"><span class="label">Youth and leadership</span><h3>Inspiring the next generation</h3><p>Youth-focused messages, mentoring, and leadership insights.</p></div></article>
       <article class="mg-item" data-yt="" data-src="videos/Life and Value1.mp4"><label class="mg-sel"><input type="checkbox" aria-label="Select video: Inspiring the next generation"><span></span></label><div class="mg-stage"><img src="images/Life and Value1.png" alt="" onerror="this.remove()"><button class="mg-play" type="button" aria-label="Play: Inspiring the next generation"></button><em>Youth and leadership</em></div><div class="mg-copy"><span class="label">Youth and leadership</span><h3>Inspiring the next generation</h3><p>Youth-focused messages, mentoring, and leadership insights.</p></div></article>
-      <article class="mg-item" data-yt="https://www.youtube.com/live/e107_xJvIA8?si=CpuImfWVJor-BPZk" data-src=""><label class="mg-sel"><input type="checkbox" aria-label="Select video: Inspiring the next generation"><span></span></label><div class="mg-stage"><img src="images/Life and Value1.png" alt="" onerror="this.remove()"><button class="mg-play" type="button" aria-label="Play: Inspiring the next generation"></button><em>Youth and leadership</em></div><div class="mg-copy"><span class="label">Keynote and presentations</span><h3>Selected talks, lectures, and conference presentations.</h3><p>SC State University and Clemson University Partnerships for Climate-Smart Commodities</p></div></article>
+      <article class="mg-item" data-yt="e107_xJvIA8" data-src=""><label class="mg-sel"><input type="checkbox" aria-label="Select video: Inspiring the next generation"><span></span></label><div class="mg-stage"><img src="images/Life and Value1.png" alt="" onerror="this.remove()"><button class="mg-play" type="button" aria-label="Play: Inspiring the next generation"></button><em>Youth and leadership</em></div><div class="mg-copy"><span class="label">Keynote and presentations</span><h3>Selected talks, lectures, and conference presentations.</h3><p>SC State University and Clemson University Partnerships for Climate-Smart Commodities</p></div></article>
     </div>
   </div></dialog>
 
@@ -831,10 +831,18 @@
       var lb = $('#mgLb'), lbImg = $('img', lb), L = [], k = 0;
       function show(n) { k = (n + L.length) % L.length; lbImg.src = L[k].src; lbImg.alt = L[k].alt; $('#mgCount').textContent = (k + 1) + ' / ' + L.length; }
       function openLb(list, n) { if (!list.length) return; L = list; lb.hidden = false; show(n); }
+      /* Accepts a plain video ID or any YouTube link (watch, youtu.be, live, shorts, embed) and returns the 11-character ID */
+      function ytId(v) {
+        v = (v || '').trim(); if (!v) return '';
+        if (/^[\w-]{11}$/.test(v)) return v;
+        var m = v.match(/(?:[?&]v=|youtu\.be\/|\/live\/|\/shorts\/|\/embed\/|\/v\/)([\w-]{11})/);
+        return m ? m[1] : '';
+      }
       function play(item) {
         var st = $('.mg-stage', item); if (st.classList.contains('on')) return;
         st._o = st.innerHTML; var y = item.dataset.yt, s = item.dataset.src;
-        if (y) st.innerHTML = '<iframe src="https://www.youtube.com/embed/' + encodeURIComponent(y) + '?autoplay=1&rel=0" title="Video" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+        var id = ytId(y);
+        if (id) st.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1" title="YouTube video" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
         else if (s) st.innerHTML = '<video controls autoplay playsinline src="' + s + '"></video>';
         else st.innerHTML = '<em>Approved video coming soon</em>';
         st.classList.add('on');
